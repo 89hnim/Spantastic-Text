@@ -23,12 +23,13 @@ class SpantasticTextViewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_spantastic_text_view)
 
         val text =
-            "email TEstne @mention OneMount Volio www.gapowork.vn thu minhvip@gmail.com ^^ MinhTA Gapo In My <3 \n Testing#gapo #onemount #twoast#ha  ooo \n www.gapowork.vn  OneMount Volio OneMount Volio OneMount Volio OneMount Volio OneMoun OneMount Volio OneMount Volio OneMount Volio OneMount Volio OneMoun OneMount Volio OneMount Volio OneMount Volio OneMount Volio OneMoun OneMount Volio OneMount Volio OneMount Volio OneMount Volio OneMount Volio OneMount Volio OneMount Volio OneMount Volio OneMount Volio OneMount Volio OneMount Volio OneMount  www.volio.vn Voliov OneMount Volio"
+            "This text is clickable <<<\nLorem Ipsum is simply #dummy #text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
         val spantasticText = createSpantasticText(text, true)
 
-        findViewById<TextView>(R.id.text_1).movementMethod = SpantasticTextLinkMovementMethod()
-        findViewById<TextView>(R.id.text_1).highlightColor = Color.TRANSPARENT
-        findViewById<TextView>(R.id.text_1).setText(
+        val tv1 = findViewById<TextView>(R.id.text_1)
+        tv1.movementMethod = SpantasticTextLinkMovementMethod()
+        tv1.highlightColor = Color.TRANSPARENT
+        tv1.setText(
             spantasticText.span,
             TextView.BufferType.SPANNABLE
         )
@@ -47,21 +48,19 @@ class SpantasticTextViewActivity : AppCompatActivity() {
             enableCache(isEnableCache)
             setReadMore(
                 SpantasticReadMoreData(
-                    readMoreCharacterLimit = 180
+                    readMoreCharacterLimit = 180,
+                    readMoreLinesLimit = 4,
+                    readMoreTextColor = Color.GRAY,
+                    readMoreText = "read more..."
                 )
             )
             addOption {
                 items(
                     listOf(
                         SpantasticTextItem(
-                            "MinhTA",
-                            text.indexOf("MinhTA"),
-                            text.indexOf("MinhTA") + 6
-                        ),
-                        SpantasticTextItem(
-                            "Gapo In My <3",
-                            text.indexOf("Gapo In My <3"),
-                            text.indexOf("Gapo In My <3") + 13
+                            "Lorem Ipsum",
+                            text.indexOf("Lorem Ipsum"),
+                            text.indexOf("Lorem Ipsum") + 11
                         )
                     )
                 )
@@ -70,8 +69,8 @@ class SpantasticTextViewActivity : AppCompatActivity() {
                         .bold()
                         .underline()
                         .strikeThrough()
-                        .foregroundColor(Color.RED)
-                        .backgroundColor(Color.YELLOW)
+                        .foregroundColor(Color.GRAY)
+                        .backgroundColor(Color.CYAN)
                         .build()
                 )
             }
@@ -87,7 +86,6 @@ class SpantasticTextViewActivity : AppCompatActivity() {
                                     "Clicked $item",
                                     Toast.LENGTH_LONG
                                 ).show()
-                                createSpantasticText(text, true)
                             }
 
                         })
@@ -95,7 +93,7 @@ class SpantasticTextViewActivity : AppCompatActivity() {
                 )
             }
             addOption {
-                pattern(SpantasticTextPattern.Custom("\\b(TEstne)\\b"))
+                pattern(SpantasticTextPattern.Custom("\\b(This text is clickable)\\b"))
                 spanStyle(
                     SpantasticTextSpanStyle.Builder()
                         .customSpanStyle(StyleSpan(Typeface.BOLD))
@@ -107,7 +105,6 @@ class SpantasticTextViewActivity : AppCompatActivity() {
                                     "Clicked span $item",
                                     Toast.LENGTH_LONG
                                 ).show()
-                                createSpantasticText(text, false)
                             }
 
                         })
